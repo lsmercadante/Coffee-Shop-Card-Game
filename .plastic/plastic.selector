@@ -1,0 +1,4 @@
+repository "Last Shot 2026-08-14_16-31-33/Last Shot@2475880776135@cloud"
+  path "/"
+    br "/main"
+    co "/main"
