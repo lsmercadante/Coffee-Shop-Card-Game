@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1abfbaa5329084229b8626fe0edb2257, type: 3}
+  m_Name: Recipe_Milkshake
+  m_EditorClassIdentifier: Assembly-CSharp::RecipeData
+  drinkName: Milkshake
+  ingredients:
+  - {fileID: 11400000, guid: 46ca94d23e39149bb81cc760a3066e2c, type: 2}
+  - {fileID: 11400000, guid: 3805231c7cdde4baf8b13d5029c8caf7, type: 2}
+  resultDrink: {fileID: 11400000, guid: 4bc8dfa1729c144ec8b206357b6bcf67, type: 2}
+  preferredPayout: 14
+  acceptedPayout: 7
