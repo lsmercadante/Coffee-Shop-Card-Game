@@ -61,7 +61,7 @@ public class CardVisual : MonoBehaviour
             if (max > pips.Length)
                 Debug.LogWarning($"{Data.cardName} has {max} uses but only {pips.Length} pips exist");
         }
-        Debug.Log($"{Data.cardName}: SetUses({remaining}, {max})");
+        //Debug.Log($"{Data.cardName}: SetUses({remaining}, {max})");
     }
 
     public void SetSelected(bool on)

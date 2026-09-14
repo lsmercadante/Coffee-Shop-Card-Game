@@ -31,9 +31,5 @@ public class DropProbe : MonoBehaviour
         Vector2 world = new Vector2(world3.x, world3.y);
 
         Collider2D hit = Physics2D.OverlapPoint(world, dropTargetMask);
-
-        Debug.Log($"screen ({screenPos.x:F0}, {screenPos.y:F0})  ->  " +
-                  $"world ({world.x:F2}, {world.y:F2})  ->  " +
-                  $"hit: {(hit != null ? hit.name : "nothing")}");
     }
 }

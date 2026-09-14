@@ -42,8 +42,8 @@ public class HandManager : MonoBehaviour
             return null;
         }
 
-        CardVisual card = Instantiate(cardPrefab, cardParent);
-        card.Initialize(instance);
+        CardVisual card = Instantiate(cardPrefab, cardParent);      // createa the empty prefab
+        card.Initialize(instance);                                  // assigns card data to the prefab --> tells it which card
 
         // The Horizontal Layout Group positions it; we only decide the order.
         spawned.Add(card);

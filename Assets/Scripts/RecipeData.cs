@@ -9,6 +9,8 @@ public class RecipeData : ScriptableObject
     [Header("Identity")]
     public string drinkName;
 
+    public Sprite icon;    // 16x16, for the customer's order bubble
+
     [Tooltip("A cup is a bag of poured ingredients and becomes " +
              "whichever recipe it exactly matches.")]
     public List<CardData> ingredients = new List<CardData>();

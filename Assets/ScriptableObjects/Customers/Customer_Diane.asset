@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfe77c21d91a84e6faf9ec7cce3fd11f, type: 3}
+  m_Name: Customer_Diane
+  m_EditorClassIdentifier: Assembly-CSharp::CustomerData
+  customerName: Diane
+  description: An early morning regular
+  bodySprite: {fileID: 21300000, guid: aaa326e75c4cf43abb9e8d84dbb4d011, type: 3}
+  preferredDrink: {fileID: 11400000, guid: 72a7a708f5e884409a5cbec9a96b4385, type: 2}
+  acceptedDrink: {fileID: 11400000, guid: d2b23fba17aa14e079aae0d2cedc954b, type: 2}
+  patience: 2
+  walkoutPenalty: 20
+  earliestTurn: 0
+  guaranteedOpener: 1

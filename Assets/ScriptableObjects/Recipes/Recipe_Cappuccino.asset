@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Recipe_Cappuccino
   m_EditorClassIdentifier: Assembly-CSharp::RecipeData
   drinkName: Cappuccino
+  icon: {fileID: 21300000, guid: bfd0a67d38e184056b78eebc29d03f0d, type: 3}
   ingredients:
   - {fileID: 11400000, guid: 46ca94d23e39149bb81cc760a3066e2c, type: 2}
   - {fileID: 11400000, guid: 0a944f68b467641558d40491a20648c9, type: 2}

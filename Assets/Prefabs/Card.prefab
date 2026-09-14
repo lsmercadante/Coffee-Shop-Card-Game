@@ -560,8 +560,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Cost
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 893e8f10bb2474830a35e6d5d3e2d661, type: 2}
+  m_sharedMaterial: {fileID: -8579461589089335735, guid: 893e8f10bb2474830a35e6d5d3e2d661, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -989,8 +989,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 893e8f10bb2474830a35e6d5d3e2d661, type: 2}
+  m_sharedMaterial: {fileID: -8579461589089335735, guid: 893e8f10bb2474830a35e6d5d3e2d661, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1072,6 +1072,8 @@ GameObject:
   - component: {fileID: 3063055302237103612}
   - component: {fileID: 9171150150394118156}
   - component: {fileID: 4503860298905038895}
+  - component: {fileID: 485233911010240449}
+  - component: {fileID: 2880997342877584527}
   m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
@@ -1174,8 +1176,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardHover
   content: {fileID: 8599248041494048537}
+  dragHandler: {fileID: 0}
   liftPixels: 8
   duration: 0.08
+--- !u!225 &485233911010240449
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8057031279297495449}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &2880997342877584527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8057031279297495449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c64e1a8fa464d67acc46b4d131c6c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardDragHandler
+  returnDuration: 0.15
 --- !u!1 &8517489010305372097
 GameObject:
   m_ObjectHideFlags: 0

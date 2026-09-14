@@ -6,7 +6,9 @@ using UnityEngine.EventSystems;
 /// position and will overwrite it on the next layout rebuild.
 public class CardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    [Header("Wiring")]
     [SerializeField] private RectTransform content;
+    [SerializeField] private CardDragHandler dragHandler;
 
     [Tooltip("Pixels to lift. Whole numbers only - a card resting at y = 7.3 " +
              "samples its sprites off the pixel grid.")]
@@ -24,6 +26,7 @@ public class CardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         if (content == null) content = transform.GetChild(0) as RectTransform;
         restPosition = content.anchoredPosition;
+        if (dragHandler == null) dragHandler = GetComponent<CardDragHandler>();
     }
 
     public void OnPointerEnter(PointerEventData e) => hovered = true;
@@ -31,6 +34,10 @@ public class CardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     private void Update()
     {
+        // A dragged card is reparented to DragLayer and positioned by the drag
+        // handler. Lifting it at the same time makes it jitter.
+        if (dragHandler != null && dragHandler.IsDragging) return;
+
         // Move t toward its target rather than tracking elapsed time, so
         // entering and leaving mid-animation reverses smoothly instead of
         // snapping back to the start.
@@ -40,7 +47,7 @@ public class CardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
         t = duration <= 0f
             ? target
-            : Mathf.MoveTowards(t, target, Time.deltaTime / duration);
+            : Mathf.MoveTowards(t, target, Time.deltaTime / duration);   // animation is frame rate independent
 
         // Round the final position so the card always lands on whole pixels.
         content.anchoredPosition = new Vector2(

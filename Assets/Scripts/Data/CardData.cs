@@ -32,6 +32,10 @@ public class CardData : ScriptableObject
              "by completing a recipe and get served. Both are cards because " +
              "both are DRAGGED.")]
     public CardKind kind = CardKind.Ingredient;
+    
+    [Tooltip("Abbreviation for the chalkboard - 'milk', 'esp', 'choc'. Keeps a " +
+         "three-ingredient line inside 130px.")]
+    public string shortName;
 }
 
 public enum CardKind

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Recipe_Milkshake
   m_EditorClassIdentifier: Assembly-CSharp::RecipeData
   drinkName: Milkshake
+  icon: {fileID: 21300000, guid: 3fc50b251d66d478b847a5da7d45d380, type: 3}
   ingredients:
   - {fileID: 11400000, guid: 46ca94d23e39149bb81cc760a3066e2c, type: 2}
   - {fileID: 11400000, guid: 3805231c7cdde4baf8b13d5029c8caf7, type: 2}

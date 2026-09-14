@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Recipe_HotChocolate
   m_EditorClassIdentifier: Assembly-CSharp::RecipeData
   drinkName: Hot Chocolate
+  icon: {fileID: 21300000, guid: 62c762757725d47919fa5b33a47e082d, type: 3}
   ingredients:
   - {fileID: 11400000, guid: 46ca94d23e39149bb81cc760a3066e2c, type: 2}
   - {fileID: 11400000, guid: 2f49e24133d40479aa5cb9d04fe335b6, type: 2}

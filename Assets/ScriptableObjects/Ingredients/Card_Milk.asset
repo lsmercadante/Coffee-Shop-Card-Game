@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfaf4c2904a6b426593be45ce4a8f502, type: 3}
   m_Name: Card_Milk
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  cardName: Steamed Milk
-  artwork: {fileID: 0}
+  cardName: Warm Milk
+  artwork: {fileID: 21300000, guid: 670efa1ea14ea4216ba2bdb7ff59a493, type: 3}
   description: 8 copies
-  chalkColour: {r: 1, g: 1, b: 0.8784314, a: 1}
+  identityColor: {r: 1, g: 1, b: 1, a: 1}
   maxUses: 3
   energyCost: 1
   kind: 0
+  shortName: 

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Card_IceCream
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Ice Cream
-  artwork: {fileID: 0}
+  artwork: {fileID: 21300000, guid: dac468d1477e341fb920b84e73e6eae5, type: 3}
   description: 2 copies
-  chalkColour: {r: 1, g: 0.7529413, b: 0.7960785, a: 1}
+  identityColor: {r: 1, g: 0.7529413, b: 0.7960785, a: 1}
   maxUses: 4
   energyCost: 1
   kind: 0
+  shortName: 
