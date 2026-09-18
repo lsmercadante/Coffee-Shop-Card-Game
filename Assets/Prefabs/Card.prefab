@@ -141,7 +141,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: b63b17b0c0ad64fa0a9efa79a36070d9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -254,13 +254,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3852932419390467884}
   - {fileID: 5866383889642987824}
   - {fileID: 4030881975068521566}
   - {fileID: 6619323114153885310}
   - {fileID: 3214952172773668093}
   - {fileID: 4372859741976283429}
   - {fileID: 6466422051397629571}
-  - {fileID: 3852932419390467884}
   m_Father: {fileID: 1418081249150937396}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -408,7 +408,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: b63b17b0c0ad64fa0a9efa79a36070d9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -483,7 +483,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: b63b17b0c0ad64fa0a9efa79a36070d9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -770,7 +770,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: b63b17b0c0ad64fa0a9efa79a36070d9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1161,8 +1161,10 @@ MonoBehaviour:
   - {fileID: 5021990219619013786}
   - {fileID: 2300926484031659464}
   - {fileID: 6896381362473841390}
-  pipFull: {r: 0.5450981, g: 0.2705882, b: 0.07450981, a: 1}
-  pipSpent: {r: 0.627451, g: 0.3215686, b: 0.1764706, a: 0.48235294}
+  pipFull: {r: 1, g: 1, b: 1, a: 1}
+  pipSpent: {r: 1, g: 1, b: 1, a: 0.43137255}
+  group: {fileID: 485233911010240449}
+  unaffordableAlpha: 0.5
 --- !u!114 &4503860298905038895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1304,6 +1306,8 @@ MonoBehaviour:
   - {fileID: 6896381362473841390}
   pipFull: {r: 0.5450981, g: 0.2705882, b: 0.07450981, a: 1}
   pipSpent: {r: 0.627451, g: 0.3215686, b: 0.1764706, a: 0.48235294}
+  group: {fileID: 0}
+  unaffordableAlpha: 0.5
 --- !u!1 &8805040065456007262
 GameObject:
   m_ObjectHideFlags: 0

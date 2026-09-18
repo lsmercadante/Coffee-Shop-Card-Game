@@ -5,8 +5,7 @@ using UnityEngine;
 /// and clearing them at end of turn.
 ///
 /// Holds CardInstance, not CardData: each physical card carries its own
-/// usesRemaining while CardData is the shared definition. Phase 2's
-/// DeckManager becomes the supplier; nothing else changes.
+/// usesRemaining while CardData is the shared definition.
 public class HandManager : MonoBehaviour
 {
     [SerializeField] private CardVisual cardPrefab;
@@ -42,8 +41,8 @@ public class HandManager : MonoBehaviour
             return null;
         }
 
-        CardVisual card = Instantiate(cardPrefab, cardParent);      // createa the empty prefab
-        card.Initialize(instance);                                  // assigns card data to the prefab --> tells it which card
+        CardVisual card = Instantiate(cardPrefab, cardParent);
+        card.Initialize(instance);
 
         // The Horizontal Layout Group positions it; we only decide the order.
         spawned.Add(card);
@@ -59,47 +58,17 @@ public class HandManager : MonoBehaviour
         Destroy(card.gameObject);
     }
 
-    /// End of turn: the ENTIRE hand is discarded, played or not (2-9).
-    /// This is what makes the deck cycle roughly every four turns.
-    public void ClearHand()
+    /// End of turn: the ENTIRE hand goes, played or not (2-9). Returns each
+    /// instance to the deck rather than destroying it - the visual is disposable,
+    /// the instance is not, and a card with 2 uses left must come back around.
+    public void DiscardAllTo(DeckManager deck)
     {
-        // Iterate backwards - removing from a list while walking it forwards
-        // skips elements, which here would leave orphaned card objects.
+        // Backwards: removing from a list while walking it forwards skips
+        // elements, which here would leave orphaned card objects on screen.
         for (int i = spawned.Count - 1; i >= 0; i--)
-            RemoveCard(spawned[i]);
-    }
-
-    /// Fill to handSize from a supplier. Phase 2's DeckManager becomes the
-    /// supplier; for now 1-15 wraps a fixed test list.
-    public void DealUpTo(IList<CardInstance> source)
-    {
-        int i = 0;
-        while (!IsFull && i < source.Count)
-            AddCard(source[i++]);
-    }
-
-    [Header("Phase 1 testing only")]
-    [SerializeField] private bool dealTestHandOnStart = true;
-
-    [Tooltip("Six cards to deal on Start so the layout can be checked before " +
-             "DeckManager exists. Delete this and the Start method in Phase 2.")]
-    [SerializeField] private List<CardData> testHand = new List<CardData>();
-
-    private void Start()
-    {
-        if (!dealTestHandOnStart) return;
-
-        for (int i = 0; i < testHand.Count; i++)
         {
-            if (IsFull) break;
-
-            CardInstance instance = new CardInstance(testHand[i]);
-
-            // TEMPORARY: part-spend the first card so the pips can be checked
-            // against a case that occurs constantly in play. Delete once verified.
-            if (i == 1) instance.usesRemaining = 1;
-
-            AddCard(instance);
+            deck.Discard(spawned[i].Instance);
+            RemoveCard(spawned[i]);
         }
     }
 }

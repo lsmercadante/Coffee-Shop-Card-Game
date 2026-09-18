@@ -9,12 +9,14 @@ public class PlayController : MonoBehaviour
 {
     public static PlayController Instance { get; private set; }
 
-    [SerializeField] private Camera worldCamera;        
+    [SerializeField] private Camera worldCamera;
     [SerializeField] private LayerMask dropTargetMask;
 
     [Tooltip("The HandManager on HandPanel. Removal routes through it rather " +
              "than letting cards destroy themselves.")]
     [SerializeField] private HandManager hand;
+    [SerializeField] private DeckManager deck;
+    [SerializeField] private TurnManager turns;
 
     private CardVisual selected;  // for assigning which card is selected 
     private DropTarget[] allTargets;        // needs to be aware of all drop targets
@@ -25,7 +27,7 @@ public class PlayController : MonoBehaviour
     {
         Instance = this;
         if (worldCamera == null) worldCamera = Camera.main;
-        RefreshTargets();  
+        RefreshTargets();
     }
 
     /// Phase 2 spawns customers at runtime, so this needs calling on arrival.
@@ -72,11 +74,11 @@ public class PlayController : MonoBehaviour
         if (!target.IsActive) return false;                 //target must be active
         if (!target.CanAccept(card.Data)) return false;    // the play must be valid
 
+        if (!turns.TrySpend(card.Data.energyCost)) return false;
+
         target.Receive(card.Instance);                      // target recieves an instance of the card
 
-        // HandManager untracks AND destroys in one call, so the list can never
-        // hold a reference to a destroyed object. The card does not remove
-        // itself; it should not know what hand it is in.
+        deck.Discard(card.Instance);     // discards, or drops it if Spend took the last use
         hand.RemoveCard(card);
 
         selected = null;      // the card is gone; do not call SetSelected on it

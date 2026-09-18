@@ -1,9 +1,11 @@
 using UnityEngine;
+using System.Collections;
 
 /// One arrival. Owns the runtime state a CustomerData asset must never hold:
 /// how much patience THIS instance has left.
 public class Customer : MonoBehaviour
-{ [SerializeField] private SpriteRenderer body;
+{
+    [SerializeField] private SpriteRenderer body;
 
     [Tooltip("Stand-in for the Phase 5 impatient animation. SpriteRenderer." +
              "color MULTIPLIES, so a saturated red zeroes the green and blue " +
@@ -14,8 +16,17 @@ public class Customer : MonoBehaviour
     [SerializeField] private PatienceDisplay patienceDisplay;       // how much patience they have
     [SerializeField] private TooltipTrigger bodyTooltip;            // hover over the body to reveal info about the customer
 
+    [Header("Walk-in")]
+    [SerializeField] private float walkSeconds = 0.5f;
+
+    [Tooltip("Up to this much random delay before setting off, so two arrivals " +
+             "in one turn don't move as a formation.")]
+    [SerializeField] private float walkStagger = 0.15f;
+
+    private Coroutine walk;
     public CustomerData Data { get; private set; }
     public int PatienceRemaining { get; private set; }
+
 
     public void Initialize(CustomerData data)
     {
@@ -43,7 +54,7 @@ public class Customer : MonoBehaviour
     {
         PatienceRemaining--;        // de-increments the patience remaining by one
         patienceDisplay.Set(PatienceRemaining, Data.patience);     // displays the new patience value
-        
+
         // Last turn: wash them red. The pips say HOW MANY turns; this says
         // HOW WORRIED, which is the signal you get while reading your hand.
         body.color = PatienceRemaining == 1 ? impatientTint : normalTint;
@@ -62,5 +73,57 @@ public class Customer : MonoBehaviour
         icons.gameObject.SetActive(!waiting);
         patienceDisplay.gameObject.SetActive(!waiting);
     }
+    public void WalkIn(Vector3 fromWorld)
+    {
+        StopWalk();
+        walk = StartCoroutine(WalkRoutine(fromWorld));
+    }
+
+    public void StopWalk()
+    {
+        if (walk == null) return;
+
+        StopCoroutine(walk);
+        walk = null;
+    }
+
+    private IEnumerator WalkRoutine(Vector3 fromWorld)
+    {
+        // localPosition is already the destination - Place set it before calling
+        // in. The walk runs backwards from there and catches up.
+        Vector3 target = transform.localPosition;
+        Vector3 start = transform.parent.InverseTransformPoint(fromWorld);
+
+        transform.localPosition = start;
+
+        yield return new WaitForSeconds(Random.Range(0f, walkStagger));
+
+        float elapsed = 0f;
+
+        while (elapsed < walkSeconds)
+        {
+            elapsed += Time.deltaTime;
+
+            // Ease-out: fast off the mark, settling into the seat. Linear reads
+            // like a conveyor, and ease-in reads like a hesitation.
+            float t = Mathf.Clamp01(elapsed / walkSeconds);
+            t = 1f - (1f - t) * (1f - t);
+
+            transform.localPosition = SnapToPixel(Vector3.Lerp(start, target, t));
+            yield return null;
+        }
+
+        transform.localPosition = target;
+        walk = null;
+    }
+
+    /// Lerp produces fractional positions, which put a 32 PPU sprite between
+    /// screen pixels and make it shimmer against the pixel-aligned shop behind
+    /// it. Every spot and offset in this section is already on the grid, so
+    /// snapping the local position keeps the whole walk on it too.
+    private static Vector3 SnapToPixel(Vector3 local)
+        => new Vector3(Mathf.Round(local.x * 32f) / 32f,
+                       Mathf.Round(local.y * 32f) / 32f,
+                       local.z);
 }
 

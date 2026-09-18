@@ -22,6 +22,8 @@ public class CardVisual : MonoBehaviour
     [Header("Pip colours")]
     [SerializeField] private Color pipFull = Color.white;
     [SerializeField] private Color pipSpent = new Color(1f, 1f, 1f, 0.25f);
+    [SerializeField] private CanvasGroup group;
+    [SerializeField, Range(0f, 1f)] private float unaffordableAlpha = 0.5f;
 
     public CardInstance Instance { get; private set; }
 
@@ -43,6 +45,7 @@ public class CardVisual : MonoBehaviour
         // drawn mid-shift may already be part-spent.
         SetUses(instance.usesRemaining, data.maxUses);
         SetSelected(false);
+        RefreshAffordable();
     }
 
     /// Show 'remaining' full pips out of 'max' total. Phase 2 calls this from
@@ -69,4 +72,25 @@ public class CardVisual : MonoBehaviour
         if (selectedOutline != null) selectedOutline.SetActive(on);
     }
 
+    private void OnEnable()
+    {
+        if (TurnManager.Instance == null) return;
+
+        TurnManager.Instance.EnergyChanged += RefreshAffordable;
+        RefreshAffordable();
+    }
+
+    private void OnDisable()
+    {
+        if (TurnManager.Instance != null)
+            TurnManager.Instance.EnergyChanged -= RefreshAffordable;
+    }
+
+private void RefreshAffordable()
+{
+    if (Instance == null || TurnManager.Instance == null) return;
+
+    bool afford = TurnManager.Instance.CanAfford(Instance.data.energyCost);
+    group.alpha = afford ? 1f : unaffordableAlpha;
+}
 }

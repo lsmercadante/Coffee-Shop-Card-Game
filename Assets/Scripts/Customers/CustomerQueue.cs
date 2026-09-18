@@ -59,7 +59,9 @@ public class CustomerQueue : MonoBehaviour
         front.gameObject.SetActive(true);
         front.SetWaiting(false);
 
-        Reposition();
+        // No Reposition here. TopUp runs immediately after seating and does it,
+        // so within one batch each customer departs from the slot it actually
+        // occupied rather than all three snapping to the front first.
         return front;
     }
 

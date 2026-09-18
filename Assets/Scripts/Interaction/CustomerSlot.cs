@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 /// The second DropTarget. A fixed position in the line that may or may not
 /// have someone standing in it. Serving is the same drag verb as pouring, so
 /// this needs no new machinery in PlayController at all - which is the test
@@ -20,12 +21,6 @@ public class CustomerSlot : DropTarget
     public Customer Occupant => occupant;
     public bool IsEmpty => occupant == null;
 
-    public void Place(Customer customer)
-    {
-        occupant = customer;
-        customer.transform.SetParent(transform, false);
-        customer.transform.localPosition = customerOffset;
-    }
 
     /// The customer leaves at once - the reference is dropped now, and the
     /// puff and the departing sprite finish on their own time.
@@ -38,17 +33,32 @@ public class CustomerSlot : DropTarget
     public void Vacate(float lingerSeconds)
     {
         if (occupant == null) return;
+        occupant.StopWalk();
 
         occupant.transform.SetParent(transform.parent, true);
         Destroy(occupant.gameObject, lingerSeconds);
         occupant = null;
     }
 
-     /// Nothing is servable yet. Drinks do not exist as cards until 3-7, so
+    /// Nothing is servable yet. Drinks do not exist as cards until 3-7, so
     /// there is nothing a customer could take and customers never highlight
     /// during a drag - which is correct, not a placeholder.
     public override bool CanAccept(CardData card) => false;
 
     /// Unreachable while CanAccept is false. 3-7 writes both together.
     public override void Receive(CardInstance instance) { }
+
+    public void Place(Customer customer)
+    {
+        occupant = customer;
+
+        // Before the reparent: this is where they are standing right now, which
+        // is the queue position they just left.
+        Vector3 from = customer.transform.position;
+
+        customer.transform.SetParent(transform, false);
+        customer.transform.localPosition = customerOffset;
+
+        customer.WalkIn(from);
+    }
 }
