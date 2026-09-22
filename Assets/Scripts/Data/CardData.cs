@@ -36,6 +36,8 @@ public class CardData : ScriptableObject
     [Tooltip("Abbreviation for the chalkboard - 'milk', 'esp', 'choc'. Keeps a " +
          "three-ingredient line inside 130px.")]
     public string shortName;
+
+    public bool floatsToTop;
 }
 
 public enum CardKind

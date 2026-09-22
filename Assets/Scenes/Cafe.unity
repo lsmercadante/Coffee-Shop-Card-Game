@@ -847,51 +847,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 454245940}
   m_CullTransparentMesh: 1
---- !u!1 &463787638
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 463787640}
-  - component: {fileID: 463787639}
-  m_Layer: 0
-  m_Name: _LineTester
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &463787639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 463787638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f30af28e7bf2340e5ae9ba05354078f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LineTester
-  line: {fileID: 1192680848}
---- !u!4 &463787640
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 463787638}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.95128, y: 0.77094, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &468188725
 GameObject:
   m_ObjectHideFlags: 0
@@ -1761,6 +1716,7 @@ MonoBehaviour:
   stackOffsetY: 0.35
   stackRoot: {fileID: 1086347817}
   pouredSpritePrefab: {fileID: 1165397761281305278, guid: 5355da411a8bd484b9fb5789e9786278, type: 3}
+  recipes: {fileID: 1549678309}
 --- !u!1 &709434158
 GameObject:
   m_ObjectHideFlags: 0
@@ -2454,7 +2410,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 821875939}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1726226106}
+        m_TargetAssemblyTypeName: ControlCluster, Assembly-CSharp
+        m_MethodName: OnDiscardPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &821875939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3206,6 +3174,7 @@ MonoBehaviour:
     m_Bits: 128
   hand: {fileID: 820616548}
   deck: {fileID: 1035803460}
+  turns: {fileID: 749911760}
 --- !u!4 &1227776629
 Transform:
   m_ObjectHideFlags: 0
@@ -3642,52 +3611,6 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1357793427
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1357793429}
-  - component: {fileID: 1357793428}
-  m_Layer: 0
-  m_Name: _DeckTester
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1357793428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357793427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76641a48a146a4c31b2fbd23c2abc236, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DeckTester
-  deck: {fileID: 1035803460}
-  hand: {fileID: 820616548}
---- !u!4 &1357793429
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357793427}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.25523, y: 0.05879, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4279,6 +4202,74 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1549678308
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1549678311}
+  - component: {fileID: 1549678310}
+  - component: {fileID: 1549678309}
+  m_Layer: 0
+  m_Name: _CupRow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1549678309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549678308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96073fe85c6d1424bb02e8d41c977111, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RecipeBook
+  recipes:
+  - {fileID: 11400000, guid: a51274a2fef9a449b8f443e01617c377, type: 2}
+  - {fileID: 11400000, guid: c443e30d15de046788d0aec2bf1f5c54, type: 2}
+  - {fileID: 11400000, guid: d2b23fba17aa14e079aae0d2cedc954b, type: 2}
+  - {fileID: 11400000, guid: 72a7a708f5e884409a5cbec9a96b4385, type: 2}
+  - {fileID: 11400000, guid: 09269f4f8cd3245879ec7a92647208c8, type: 2}
+  - {fileID: 11400000, guid: 66f65b271cff84045b9489dbe3a7bf6b, type: 2}
+--- !u!114 &1549678310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549678308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fa8eaded513b40e3b912668e5b9b9d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CupRow
+  cupSlots:
+  - {fileID: 1976913337}
+  - {fileID: 673971150}
+  - {fileID: 1658527562}
+--- !u!4 &1549678311
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549678308}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.25523, y: 0.05879, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1565820005
 GameObject:
   m_ObjectHideFlags: 0
@@ -4895,6 +4886,7 @@ MonoBehaviour:
   stackOffsetY: 0.35
   stackRoot: {fileID: 1686716916}
   pouredSpritePrefab: {fileID: 1165397761281305278, guid: 5355da411a8bd484b9fb5789e9786278, type: 3}
+  recipes: {fileID: 1549678309}
 --- !u!1 &1686716915
 GameObject:
   m_ObjectHideFlags: 0
@@ -5045,7 +5037,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ControlCluster
   turns: {fileID: 749911760}
   energyLabel: {fileID: 1654520240}
-  normal: {r: 1, g: 1, b: 1, a: 1}
+  normal: {r: 0, g: 0, b: 0, a: 1}
   low: {r: 0.95, g: 0.75, b: 0.3, a: 1}
   critical: {r: 0.9, g: 0.35, b: 0.35, a: 1}
   discardButton: {fileID: 821875938}
@@ -5701,6 +5693,7 @@ MonoBehaviour:
   stackOffsetY: 0.35
   stackRoot: {fileID: 300204392}
   pouredSpritePrefab: {fileID: 1165397761281305278, guid: 5355da411a8bd484b9fb5789e9786278, type: 3}
+  recipes: {fileID: 1549678309}
 --- !u!1 &2030492479
 GameObject:
   m_ObjectHideFlags: 0
@@ -6050,7 +6043,6 @@ SceneRoots:
   - {fileID: 1394189635}
   - {fileID: 1227776629}
   - {fileID: 1192680849}
-  - {fileID: 463787640}
   - {fileID: 1035803461}
-  - {fileID: 1357793429}
   - {fileID: 749911761}
+  - {fileID: 1549678311}
