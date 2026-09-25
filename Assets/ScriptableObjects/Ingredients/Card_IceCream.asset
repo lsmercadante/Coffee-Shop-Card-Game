@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Ice Cream
   artwork: {fileID: 21300000, guid: dac468d1477e341fb920b84e73e6eae5, type: 3}
+  bandSprite: {fileID: 21300000, guid: 1a340e900be9d4c5cac98bc4fbfdb1ff, type: 3}
   description: 2 copies
   identityColor: {r: 1, g: 0.7529413, b: 0.7960785, a: 1}
   maxUses: 4
   energyCost: 1
   kind: 0
   shortName: 
+  floatsToTop: 1

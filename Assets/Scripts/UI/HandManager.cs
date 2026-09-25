@@ -71,4 +71,12 @@ public class HandManager : MonoBehaviour
             RemoveCard(spawned[i]);
         }
     }
+     public int DosesRemaining(CardData card)
+    {
+        int doses = 0;
+        foreach (CardVisual visual in spawned)
+            if (visual.Instance.data == card)
+                doses += visual.Instance.usesRemaining;
+        return doses;
+    }
 }

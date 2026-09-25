@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Warm Milk
   artwork: {fileID: 21300000, guid: 670efa1ea14ea4216ba2bdb7ff59a493, type: 3}
+  bandSprite: {fileID: 21300000, guid: 3dafe0f1debae49b4898b26a6589970a, type: 3}
   description: 8 copies
   identityColor: {r: 1, g: 1, b: 1, a: 1}
   maxUses: 3
   energyCost: 1
   kind: 0
   shortName: 
+  floatsToTop: 0

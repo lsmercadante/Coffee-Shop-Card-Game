@@ -10,6 +10,7 @@ public class CardData : ScriptableObject
     [Header("Identity")]
     public string cardName;
     public Sprite artwork;
+    public Sprite bandSprite;
 
     [TextArea(2, 3)]
     public string description;

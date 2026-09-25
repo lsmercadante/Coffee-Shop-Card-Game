@@ -26,6 +26,10 @@ public class DeckManager : MonoBehaviour
     /// shrinks - DrawCount alone jumps back up on every reshuffle.
     public int CardsRemaining => drawPile.Count + discardPile.Count;
 
+    /// Fires when a card leaves the shift for good. The chalkboard listens:
+    /// this is the only moment DosesRemaining can drop to zero permanently.
+    public event System.Action CardExhausted;
+
     private void Awake()
     {
         int actualSeed = seed != 0 ? seed : System.Environment.TickCount;       // pulls a seed
@@ -96,6 +100,7 @@ public class DeckManager : MonoBehaviour
         {
             Debug.Log($"{card.data.cardName} is spent and leaves the game. " +
                       $"{CardsRemaining} cards left.");
+            CardExhausted?.Invoke();
             return;
         }
 
@@ -138,5 +143,21 @@ public class DeckManager : MonoBehaviour
                  "recipes, and a version with fewer milk cards at the same dose " +
                  "count ran dry early and stranded the foam.")]
         public int copies = 1;
+    }
+    /// Doses left of one card type across both piles. It CANNOT see the hand -
+    /// HandManager owns that - so the caller adds the hand's doses in.
+    public int DosesRemaining(CardData card)
+    {
+        // TODO: walk drawPile and discardPile, summing usesRemaining on every
+        // instance whose .data is this card.
+        int doses = 0;
+        foreach (CardInstance instance in drawPile)
+            if (instance.data == card)
+                doses += instance.usesRemaining;
+        foreach (CardInstance instance in discardPile)
+            if (instance.data == card)
+                doses += instance.usesRemaining;
+
+        return doses;
     }
 }

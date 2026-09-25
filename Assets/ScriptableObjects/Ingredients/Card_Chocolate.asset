@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Chocolate
   artwork: {fileID: 21300000, guid: ba0977014d92046469f875ab9ab7a8e7, type: 3}
+  bandSprite: {fileID: 21300000, guid: c50a586fa65004c77bdde5746939f48a, type: 3}
   description: 8 copies
   identityColor: {r: 0.627451, g: 0.3215686, b: 0.1764706, a: 1}
   maxUses: 1
   energyCost: 1
   kind: 0
   shortName: 
+  floatsToTop: 0

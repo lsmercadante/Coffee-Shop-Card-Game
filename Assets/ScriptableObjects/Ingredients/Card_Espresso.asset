@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Espresso
   artwork: {fileID: 21300000, guid: 2a619043647cf4180aea1b3419beeaae, type: 3}
+  bandSprite: {fileID: 21300000, guid: 818415577d9d846759173360d28db9f4, type: 3}
   description: 10 copies
   identityColor: {r: 0.5450981, g: 0.2705882, b: 0.07450981, a: 1}
   maxUses: 2
   energyCost: 1
   kind: 0
   shortName: 
+  floatsToTop: 0

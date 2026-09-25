@@ -58,14 +58,10 @@ public class CupSlot : DropTarget
 
     public override void Receive(CardInstance instance)
     {
-        // TODO: consume one dose, add the card's DATA (not the instance) to
-        // contents, then Refresh.
-        //
         // The instance goes on to DeckManager.Discard via PlayController -
         // this method only decides that a dose was used.
         instance.Spend();
         contents.Add(instance.data); // adding the card data to the contents list (so adding an ingredient to the list of things containe din cup)       
-        SpawnPouredSprite(instance.data, contents.Count - 1);  // content.Count -1 because we want the index, and count is one too many
         Refresh();
     }
 
@@ -80,11 +76,11 @@ public class CupSlot : DropTarget
         if (sr != null)
         {
 
-            if (card.artwork != null) sr.sprite = card.artwork;         // displays the artowrk
+            if (card.bandSprite != null) sr.sprite = card.bandSprite;         // displays the artowrk
             // Tint from the identity colour so pours are distinguishable before
             // there is any art. Harmless once real sprites exist.
-            sr.color = card.identityColor;
-            sr.sortingOrder = indexInStack + 1;   // later pours draw in front
+            //sr.color = card.identityColor;
+            sr.sortingOrder = GetComponent<SpriteRenderer>().sortingOrder - 1 ;  // pours draw behind
         }
     }
 
@@ -92,8 +88,8 @@ public class CupSlot : DropTarget
     public void Clear()
     {
         contents.Clear();
-        for (int i = stackRoot.childCount - 1; i >= 0; i--)
-            Destroy(stackRoot.GetChild(i).gameObject);
+       // for (int i = stackRoot.childCount - 1; i >= 0; i--)
+        //    Destroy(stackRoot.GetChild(i).gameObject);
         Refresh();
     }
     public List<CardData> DisplayOrder()
@@ -133,9 +129,18 @@ public class CupSlot : DropTarget
 
     private void Refresh()
     {
-        // TODO: rebuild the tooltip text (see 3-5b) and log Describe() while
-        // you are still testing. 4-6b's liquid bands hang off here too.
+        RebuildBands();
         Debug.Log($"{Describe()}");
     }
+    private void RebuildBands()
+{
+    for (int i = stackRoot.childCount - 1; i >= 0; i--)
+        Destroy(stackRoot.GetChild(i).gameObject);
+
+    List<CardData> order = DisplayOrder();
+    for (int i = 0; i < order.Count; i++)
+        SpawnPouredSprite(order[i], i);
+}
+
     
 }
