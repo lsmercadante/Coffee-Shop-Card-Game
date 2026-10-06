@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Recipe_Latte
   m_EditorClassIdentifier: Assembly-CSharp::RecipeData
   drinkName: Latte
-  icon: {fileID: 21300000, guid: 28ef23daecc8241d4aa774f405f2ced9, type: 3}
+  icon: {fileID: 21300000, guid: d3448616abe9c40018e46c13a6f392f4, type: 3}
   ingredients:
   - {fileID: 11400000, guid: 46ca94d23e39149bb81cc760a3066e2c, type: 2}
   - {fileID: 11400000, guid: 0a944f68b467641558d40491a20648c9, type: 2}
   resultDrink: {fileID: 11400000, guid: f375fe38d46d244b9aa6f47912b6b4bf, type: 2}
   preferredPayout: 12
   acceptedPayout: 6
+  iconName: Latte

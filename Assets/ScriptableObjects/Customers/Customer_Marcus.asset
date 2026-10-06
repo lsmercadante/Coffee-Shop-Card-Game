@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CustomerData
   customerName: Marcus
   description: Always going to or from the office
-  bodySprite: {fileID: 21300000, guid: 12b4dd4d1530a4412b583de6e4ae1b33, type: 3}
+  bodySprite: {fileID: 21300000, guid: 3cfbd4fc2669f4f069ee76cce7cf3527, type: 3}
   preferredDrink: {fileID: 11400000, guid: c443e30d15de046788d0aec2bf1f5c54, type: 2}
   acceptedDrink: {fileID: 11400000, guid: 66f65b271cff84045b9489dbe3a7bf6b, type: 2}
   patience: 3

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CustomerData
   customerName: Gabe
   description: Kid looking for a sugar rush after school
-  bodySprite: {fileID: 21300000, guid: 18b60ff62110e454baf371363d9867a4, type: 3}
+  bodySprite: {fileID: 21300000, guid: 0de66e3e9a37141dd8dc93676dd7f81b, type: 3}
   preferredDrink: {fileID: 11400000, guid: 09269f4f8cd3245879ec7a92647208c8, type: 2}
   acceptedDrink: {fileID: 0}
   patience: 3

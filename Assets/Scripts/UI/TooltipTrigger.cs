@@ -21,11 +21,13 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     // but a missing panel should not be a null reference if one does.
     public void OnPointerEnter(PointerEventData e)
     {
+        Debug.Log($"hover enter {name}");
         if (TooltipPanel.Instance == null) return;
         // No offset: TooltipPanel places itself clear of this point using its
         // own measured size, which a fixed offset here could not do - the
         // panel is a different height for a drink than for a description.
         TooltipPanel.Instance.Show(title, body, transform.position);
+        Debug.Log($"tooltip '{title}' / '{body}'");
     }
 
     public void OnPointerExit(PointerEventData e)

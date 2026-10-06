@@ -125,5 +125,16 @@ public class Customer : MonoBehaviour
         => new Vector3(Mathf.Round(local.x * 32f) / 32f,
                        Mathf.Round(local.y * 32f) / 32f,
                        local.z);
+
+    public ServeResponse Evaluate(CardData drink)
+    {
+        if (drink == null)
+            return ServeResponse.Refused ;
+        if (drink == Data.preferredDrink.resultDrink)
+            return ServeResponse.Preferred ;
+        if (Data.acceptedDrink != null && drink == Data.acceptedDrink.resultDrink)
+            return ServeResponse.Accepted ;
+        else return ServeResponse.Refused ; 
+    }
 }
 

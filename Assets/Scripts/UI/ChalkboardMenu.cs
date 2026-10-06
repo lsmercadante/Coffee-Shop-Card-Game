@@ -20,6 +20,8 @@ public class ChalkboardMenu : MonoBehaviour
 
     [Tooltip("A TMP object using the SMALL pixel font.")]
     [SerializeField] private TextMeshProUGUI subPrefab;
+    [SerializeField] private TextMeshProUGUI ingredientPrefab;
+    
 
     [SerializeField] private Transform menuRoot;
     [SerializeField] private Transform stockRoot;
@@ -33,7 +35,7 @@ public class ChalkboardMenu : MonoBehaviour
     private readonly Dictionary<CardData, TextMeshProUGUI> stockRows =
         new Dictionary<CardData, TextMeshProUGUI>();
 
-   private void Awake() => Rebuild();
+    private void Awake() => Rebuild();
 
     public void Rebuild()
     {
@@ -45,17 +47,17 @@ public class ChalkboardMenu : MonoBehaviour
         foreach (RecipeData r in recipes)
         {
             var nameRow = Instantiate(namePrefab, menuRoot);
-            nameRow.text = r.drinkName;
+            nameRow.text = $"{DrinkIcon(r)} {r.drinkName}";
             nameRows[r] = nameRow;   // NEW - remember it
 
-            var sub = Instantiate(subPrefab, menuRoot);
+            var sub = Instantiate(ingredientPrefab, menuRoot);
             sub.text = BuildIngredientLine(r);
         }
 
         foreach (CardData c in ingredients)
-        {   
+        {
             var stockRow = Instantiate(subPrefab, stockRoot);
-            stockRow.text = $"{Hex(c.identityColor)}{c.cardName}</color>";
+            stockRow.text = Icon(c);
             stockRows[c] = stockRow;   // NEW - remember it
         }
     }
@@ -69,17 +71,18 @@ public class ChalkboardMenu : MonoBehaviour
             return;
         }
 
-        row.text = crossedOut ? $"<s>{recipe.drinkName}</s>" : recipe.drinkName;
+
+        row.text = crossedOut ? $"{DrinkIcon(recipe)} <s>{recipe.drinkName}</s>" : $"{DrinkIcon(recipe)} {recipe.drinkName}";
     }
 
     public void SetStock(CardData card, int doses)
     {
         if (!stockRows.TryGetValue(card, out TextMeshProUGUI row))
-            {
-                Debug.LogWarning($"No chalkboard row for {card.cardName}", this);
+        {
+            Debug.LogWarning($"No chalkboard row for {card.cardName}", this);
             return;
-            }
-        row.text = $"{Hex(card.identityColor)}{card.cardName}</color>  x{doses}";
+        }
+        row.text = $"{Icon(card)} x{doses}";
     }
 
     private string BuildIngredientLine(RecipeData r)
@@ -90,7 +93,7 @@ public class ChalkboardMenu : MonoBehaviour
         {
             if (i > 0) sb.Append(" + ");
             CardData ing = r.ingredients[i];
-            sb.Append(Hex(ing.identityColor)).Append(Abbrev(ing.cardName)).Append("</color>");
+            sb.Append(Icon(ing));
         }
 
         return sb.ToString();
@@ -98,6 +101,9 @@ public class ChalkboardMenu : MonoBehaviour
 
     /// TMP rich-text color tag.
     private static string Hex(Color c) => $"<color=#{ColorUtility.ToHtmlStringRGB(c)}>";
+    private static string Icon(CardData card) => $"<sprite name=\"{Abbrev(card.cardName)}\">";
+
+    private static string DrinkIcon(RecipeData r) => $"<sprite name=\"{r.iconName}\">";
 
     /// "Steamed Milk" -> "milk". Keeps Cappuccino's three-ingredient line
     /// inside 130px, which is the whole reason for the abbreviation.
@@ -105,12 +111,12 @@ public class ChalkboardMenu : MonoBehaviour
     {
         switch (name)
         {
-            case "Warm Milk":  return "milk";
-            case "Ice Cream":  return "ice";
-            case "Chocolate":  return "choc";
-            case "Espresso":   return "esp";
-            case "Foam":       return "foam";
-            default:           return name.ToLower();
+            case "Warm Milk": return "milk";
+            case "Ice Cream": return "ice";
+            case "Chocolate": return "choc";
+            case "Espresso": return "esp";
+            case "Foam": return "foam";
+            default: return name.ToLower();
         }
     }
 

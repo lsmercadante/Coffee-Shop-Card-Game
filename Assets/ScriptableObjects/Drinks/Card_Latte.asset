@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: Card_Latte
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Latte
-  artwork: {fileID: 0}
+  artwork: {fileID: 21300000, guid: 52fe96ae975b647d6bbaf51bbfb336e3, type: 3}
+  bandSprite: {fileID: 0}
   description: 
-  chalkColour: {r: 1, g: 1, b: 1, a: 1}
+  identityColor: {r: 1, g: 1, b: 1, a: 1}
   maxUses: 1
   energyCost: 0
   kind: 1
+  shortName: 
+  floatsToTop: 0

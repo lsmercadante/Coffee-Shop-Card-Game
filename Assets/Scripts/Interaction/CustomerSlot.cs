@@ -12,14 +12,14 @@ public class CustomerSlot : DropTarget
              "floor line. Default is correct - do not set this per spot.")]
     [SerializeField] private Vector3 customerOffset = new Vector3(0f, -0.75f, 0f);
 
-    [Tooltip("A short-lived sprite spawned when anyone leaves. Parented to the " +
-             "SLOT, not the customer, so it outlives the object it announces.")]
-    [SerializeField] private GameObject departurePuffPrefab;
-
     private Customer occupant;
 
     public Customer Occupant => occupant;
     public bool IsEmpty => occupant == null;
+
+    [Tooltip("Parented to the SLOT, not the customer, so it outlives the object " +
+         "it announces.")]
+    [SerializeField] private GameObject departurePuffPrefab;
 
 
     /// The customer leaves at once - the reference is dropped now, and the
@@ -35,6 +35,12 @@ public class CustomerSlot : DropTarget
         if (occupant == null) return;
         occupant.StopWalk();
 
+        if (departurePuffPrefab != null)
+            Instantiate(departurePuffPrefab,
+            occupant.transform.position + Vector3.up * 0.75f,
+            Quaternion.identity, transform);
+
+
         occupant.transform.SetParent(transform.parent, true);
         Destroy(occupant.gameObject, lingerSeconds);
         occupant = null;
@@ -43,10 +49,14 @@ public class CustomerSlot : DropTarget
     /// Nothing is servable yet. Drinks do not exist as cards until 3-7, so
     /// there is nothing a customer could take and customers never highlight
     /// during a drag - which is correct, not a placeholder.
-    public override bool CanAccept(CardData card) => false;
+    public override bool CanAccept(CardData card)
+    { return (!IsEmpty && occupant.Evaluate(card) != ServeResponse.Refused); }
 
-    /// Unreachable while CanAccept is false. 3-7 writes both together.
-    public override void Receive(CardInstance instance) { }
+    /// Never called. Serving goes through PlayController.TryServe, which takes
+    /// a cup rather than a CardInstance - a drink has no instance behind it.
+    /// This exists because DropTarget requires it.
+    public override void Receive(CardInstance instance)
+        => Debug.LogWarning($"{name}: Receive called on a customer slot", this);
 
     public void Place(Customer customer)
     {

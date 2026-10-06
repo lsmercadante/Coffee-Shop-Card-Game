@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: Card_Mocha
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: Mocha
-  artwork: {fileID: 0}
+  artwork: {fileID: 21300000, guid: 5ee454007c03542649f18141c400c419, type: 3}
+  bandSprite: {fileID: 0}
   description: 
-  chalkColour: {r: 1, g: 1, b: 1, a: 1}
+  identityColor: {r: 1, g: 1, b: 1, a: 1}
   maxUses: 1
   energyCost: 0
   kind: 1
+  shortName: 
+  floatsToTop: 0

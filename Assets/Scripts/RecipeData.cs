@@ -26,6 +26,8 @@ public class RecipeData : ScriptableObject
              "Always half the preferred price, rounded down.")]
     public int acceptedPayout;
 
+    public string iconName;
+
     /// Total energy to build and serve one of these. Useful for sanity-checking
     /// prices, and Phase 3's UI can show it.
     public int TotalEnergyCost

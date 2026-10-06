@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CustomerData
   customerName: Leo
   description: Killing time before his late-night gig.
-  bodySprite: {fileID: 21300000, guid: 3b9960c14fc2c4b97b16f2ca9477efc4, type: 3}
+  bodySprite: {fileID: 21300000, guid: cb0ad17f4299b469f9ca5a6091553446, type: 3}
   preferredDrink: {fileID: 11400000, guid: 66f65b271cff84045b9489dbe3a7bf6b, type: 2}
   acceptedDrink: {fileID: 11400000, guid: c443e30d15de046788d0aec2bf1f5c54, type: 2}
   patience: 4

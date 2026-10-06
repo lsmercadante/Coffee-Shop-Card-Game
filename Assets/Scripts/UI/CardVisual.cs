@@ -29,22 +29,26 @@ public class CardVisual : MonoBehaviour
 
     /// Passthrough so PlayController and DropTarget.CanAccept(CardData)
     /// need no changes at all.
-    public CardData Data => Instance.data;
+   public CardData Data { get; private set; }
+
+   [SerializeField] private GameObject highlightOutline;
+   
 
     public void Initialize(CardInstance instance)
     {
         Instance = instance;
-        CardData data = instance.data;
+        Data = instance.data;
 
-        nameText.text = data.cardName;
-        artwork.sprite = data.artwork;
-        background.color = data.identityColor;
-        costText.text = data.energyCost.ToString();
+        nameText.text = Data.cardName;
+        artwork.sprite = Data.artwork;
+        background.color = Data.identityColor;
+        costText.text = Data.energyCost.ToString();
 
         // Actual remaining doses rather than assuming a fresh card - a card
         // drawn mid-shift may already be part-spent.
-        SetUses(instance.usesRemaining, data.maxUses);
+        SetUses(instance.usesRemaining, Data.maxUses);
         SetSelected(false);
+        SetHighlight(false);
         RefreshAffordable();
     }
 
@@ -93,4 +97,23 @@ private void RefreshAffordable()
     bool afford = TurnManager.Instance.CanAfford(Instance.data.energyCost);
     group.alpha = afford ? 1f : unaffordableAlpha;
 }
+
+public void InitializeAsDrink(CardData drink)
+    {
+        Data = drink;
+        nameText.text = drink.cardName;
+        artwork.sprite = drink.artwork;
+        background.color = drink.identityColor;
+        costText.text = drink.energyCost.ToString();
+        SetUses(0,0);
+        SetSelected(false);
+        SetHighlight(false);
+        GetComponent<CardDragHandler>().enabled = false;
+    }
+
+public void SetHighlight(bool on)
+    {
+        if (highlightOutline != null)
+            highlightOutline.SetActive(on);
+    }
 }

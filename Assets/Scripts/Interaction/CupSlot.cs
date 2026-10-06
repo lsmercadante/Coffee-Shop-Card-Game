@@ -26,6 +26,8 @@ public class CupSlot : DropTarget
 
     [SerializeField] private RecipeBook recipes;
 
+    [SerializeField] private TooltipTrigger tooltip;
+
 
     // Insertion order, not a set. The recipe matching is order-free, but
     // 4-6b's liquid bands stack in pour order, so the display needs the
@@ -40,6 +42,19 @@ public class CupSlot : DropTarget
     /// The recipe this cup currently IS, or null.
     public RecipeData Matched => recipes.MatchedRecipe(contents);
 
+    // The live drink card, or null. Created and destroyed by RebuildVisuals,
+    // which is the only thing that assigns this. Not serialized - it does not
+    // exist until a cup matches.
+    private CardVisual drinkCard;
+    [SerializeField] private CardVisual drinkCardPrefab;
+    [SerializeField] private Transform cardRoot;   // the world-space canvas
+
+    /// The drink this cup can be served as, or null.
+    public CardData ServableDrink => Matched?.resultDrink;
+
+    /// The live card object when this cup is servable, or null. CupDragHandler
+    /// picks this up; nothing else should reparent or destroy it.
+    public CardVisual DrinkCard => drinkCard;
 
 
     // Awake method is overriding the one from drop target
@@ -80,7 +95,7 @@ public class CupSlot : DropTarget
             // Tint from the identity colour so pours are distinguishable before
             // there is any art. Harmless once real sprites exist.
             //sr.color = card.identityColor;
-            sr.sortingOrder = GetComponent<SpriteRenderer>().sortingOrder - 1 ;  // pours draw behind
+            sr.sortingOrder = GetComponent<SpriteRenderer>().sortingOrder - 1;  // pours draw behind
         }
     }
 
@@ -88,7 +103,7 @@ public class CupSlot : DropTarget
     public void Clear()
     {
         contents.Clear();
-       // for (int i = stackRoot.childCount - 1; i >= 0; i--)
+        // for (int i = stackRoot.childCount - 1; i >= 0; i--)
         //    Destroy(stackRoot.GetChild(i).gameObject);
         Refresh();
     }
@@ -110,7 +125,7 @@ public class CupSlot : DropTarget
     }
     public string Describe()
     {
-        if (contents.Count == 0)
+        if (IsEmpty)
             return "empty";
 
         List<string> names = new List<string>();
@@ -129,18 +144,76 @@ public class CupSlot : DropTarget
 
     private void Refresh()
     {
-        RebuildBands();
+        RebuildVisuals();
+        RefreshTooltip();
         Debug.Log($"{Describe()}");
     }
-    private void RebuildBands()
-{
-    for (int i = stackRoot.childCount - 1; i >= 0; i--)
-        Destroy(stackRoot.GetChild(i).gameObject);
+    private void RebuildVisuals()
+    {
+        for (int i = stackRoot.childCount - 1; i >= 0; i--)
+            Destroy(stackRoot.GetChild(i).gameObject);
+        if (DrinkCard != null)
+            {
+            Destroy(drinkCard.gameObject);
+            drinkCard = null;
+            }
+        RecipeData match = Matched;
+        if (match != null)
+            {
+                highlightRenderer.enabled = false;
+                drinkCard = Instantiate(drinkCardPrefab, cardRoot);
+                drinkCard.InitializeAsDrink(match.resultDrink);
+            }
+        else
+            {
+                highlightRenderer.enabled = true;
+                List<CardData> order = DisplayOrder();
+                for (int i = 0; i < order.Count; i++)
+                SpawnPouredSprite(order[i], i);
+            }
+    }
 
-    List<CardData> order = DisplayOrder();
-    for (int i = 0; i < order.Count; i++)
-        SpawnPouredSprite(order[i], i);
-}
+    /// Called from Refresh. The contents change every pour, so a cached string
+    /// lies - and the tooltip is exactly where a lie is least visible, since you
+    /// only see it when you go looking.
+    private void RefreshTooltip()
+    {
+        // TODO: one line per ingredient, in DISPLAY order.
+        //
+        // Use DisplayOrder(), not contents. The bands float foam and ice cream
+        // to the top regardless of pour order, and a list that contradicts the
+        // picture directly above it is worse than no list.
+        //
+        if (IsEmpty)
+        {
+            tooltip.SetText("", "");
+            return;
+        }
 
-    
+        List<string> names = new List<string>();
+        List<CardData> order = DisplayOrder();
+        foreach (CardData card in order)
+            names.Add(card.cardName);
+        string text = string.Join("\n", names);
+        tooltip.SetText("", text);
+
+
+        // Empty cup: pass an empty body. TooltipPanel already hides the body
+        // row when it is empty, so an empty cup shows nothing rather than a
+        // bare panel.
+
+
+        // string.Join("\n", lines) builds the body, the same call Describe
+        // uses with a different separator.
+    }
+    public override void SetHighlight(bool on)
+    {
+        if (drinkCard != null)
+        {
+            drinkCard.SetHighlight(on);
+            return;
+        }
+        base.SetHighlight(on);
+    }
+
 }

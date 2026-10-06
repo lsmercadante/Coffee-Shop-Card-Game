@@ -26,7 +26,7 @@ public class TooltipPanel : MonoBehaviour
 
     public void Show(string title, string body, Vector3 worldAnchor)
     {
-        if (string.IsNullOrEmpty(title)) return;
+        if (string.IsNullOrEmpty(body)) return;
 
         titleText.text = title;
         bodyText.text = body;

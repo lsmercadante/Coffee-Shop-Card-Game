@@ -23,6 +23,10 @@ public class PlayController : MonoBehaviour
 
     public CardVisual Selected => selected;  // so that other scripts can read what is selected
 
+    private CupSlot selectedCup;                    // the cup whose drink is selected
+    public CupSlot SelectedCup => selectedCup;      // read-only from outside
+
+
     private void Awake()
     {
         Instance = this;
@@ -51,6 +55,10 @@ public class PlayController : MonoBehaviour
         // Clicking the selected card again deselects it.
         if (selected == card) { ClearSelection(); return; }
 
+        if (selectedCup != null && selectedCup.DrinkCard != null)
+            selectedCup.DrinkCard.SetSelected(false);
+        selectedCup = null;
+
         if (selected != null) selected.SetSelected(false);
 
         selected = card;
@@ -59,10 +67,29 @@ public class PlayController : MonoBehaviour
         RefreshHighlights();
     }
 
+    public void SelectCup(CupSlot cup)
+    {
+        if (selectedCup == cup)
+        { ClearSelection(); return; }
+        if (selected != null) selected.SetSelected(false);
+        if (selectedCup != null && selectedCup.DrinkCard != null)
+            selectedCup.DrinkCard.SetSelected(false);
+        selected = null;
+        selectedCup = cup;
+        if (cup.DrinkCard != null)
+            cup.DrinkCard.SetSelected(true);
+        RefreshHighlights();
+    }
+
+
+
     public void ClearSelection()
     {
         if (selected != null) selected.SetSelected(false);
         selected = null;
+        if (selectedCup != null && selectedCup.DrinkCard != null)
+            selectedCup.DrinkCard.SetSelected(false);
+        selectedCup = null;
         RefreshHighlights();
     }
 
@@ -91,7 +118,7 @@ public class PlayController : MonoBehaviour
     /// of what makes the interaction feel responsive.
     public void RefreshHighlights()
     {
-        CardData card = selected != null ? selected.Data : null;
+        CardData card = selected != null ? selected.Data : selectedCup != null ? selectedCup.ServableDrink : null;
 
         foreach (DropTarget t in allTargets)
         {
@@ -104,6 +131,15 @@ public class PlayController : MonoBehaviour
     public void BeginDragHighlight(CardVisual card)
     {
         selected = card;
+        RefreshHighlights();
+    }
+
+    /// Called by CupDragHandler on pickup. Sets the CUP as the selection, so a
+    /// click landing mid-drag dispatches to TryServe rather than TryPlay.
+    public void BeginCupDragHighlight(CupSlot cup)
+    {
+        selected = null;
+        selectedCup = cup;
         RefreshHighlights();
     }
 }

@@ -14,10 +14,10 @@ using UnityEngine;
 public abstract class DropTarget : MonoBehaviour       
 {
     [Header("Highlight")]
-    [SerializeField] private SpriteRenderer highlightRenderer;      // a sprite render that will control the highlight
-    [SerializeField] private Color highlightColour = new Color(1f, 0.95f, 0.6f);        // the highlight color, "new" instantiates this object
+    [SerializeField] protected SpriteRenderer highlightRenderer;      // a sprite render that will control the highlight
+    [SerializeField] protected Color highlightColour = new Color(1f, 0.95f, 0.6f);        // the highlight color, "new" instantiates this object
 
-    private Color baseColour;           // the base color of the object
+    protected Color baseColour;           // the base color of the object
     private Collider2D ownCollider;        // the object's own collider
 
     // protected means it can only be called from within the class 
@@ -47,7 +47,7 @@ public abstract class DropTarget : MonoBehaviour
     /// but the method itself may vary so it is not defined here, only required
     public abstract void Receive(CardInstance instance);
 
-    public void SetHighlight(bool on)
+    public virtual void SetHighlight(bool on)
     {
         if (highlightRenderer == null) return;      // if no highlight renderer, don't set the highlight
         highlightRenderer.color = on ? highlightColour : baseColour;    // if on = true, we set the highlight
