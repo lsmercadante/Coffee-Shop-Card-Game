@@ -10,6 +10,9 @@ public class TargetClickRelay : MonoBehaviour
 {
     private void Update()
     {
+        if (Mouse.current == null) return;
+        if (!Mouse.current.leftButton.wasPressedThisFrame) return;
+        
         var pc = PlayController.Instance;
         if (pc.Selected == null && pc.SelectedCup == null) return;
 

@@ -21,3 +21,5 @@ MonoBehaviour:
   preferredPayout: 20
   acceptedPayout: 10
   iconName: Affogato
+  preferredPrice: 20
+  acceptedPrice: 10

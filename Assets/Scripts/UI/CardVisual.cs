@@ -100,6 +100,7 @@ private void RefreshAffordable()
 
 public void InitializeAsDrink(CardData drink)
     {
+        Debug.Log($"InitializeAsDrink {drink.cardName}");
         Data = drink;
         nameText.text = drink.cardName;
         artwork.sprite = drink.artwork;

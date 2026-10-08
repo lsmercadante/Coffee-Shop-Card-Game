@@ -21,3 +21,5 @@ MonoBehaviour:
   preferredPayout: 12
   acceptedPayout: 6
   iconName: Latte
+  preferredPrice: 12
+  acceptedPrice: 6

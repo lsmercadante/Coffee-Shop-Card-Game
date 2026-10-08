@@ -28,6 +28,10 @@ public class RecipeData : ScriptableObject
 
     public string iconName;
 
+    [Header("Payout")]
+    public int preferredPrice;
+    public int acceptedPrice;
+
     /// Total energy to build and serve one of these. Useful for sanity-checking
     /// prices, and Phase 3's UI can show it.
     public int TotalEnergyCost

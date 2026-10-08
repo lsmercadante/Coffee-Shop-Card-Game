@@ -17,6 +17,8 @@ public class CustomerLine : MonoBehaviour
 
     [SerializeField] private float departureLinger = 0.4f;
 
+    [SerializeField] private float happyLingerSeconds = 0.6f;
+
     /// Turn 1: seed the shop partly full so there is something to do
     /// immediately and still room for the queue to build.
     public void OpenShift(int turn)
@@ -103,5 +105,11 @@ public class CustomerLine : MonoBehaviour
         }
 
         return string.Join(" ", parts);
+    }
+
+    public void Serve(CustomerSlot slot)
+    {
+        slot.Occupant.ShowHappy();
+        slot.Vacate(happyLingerSeconds);
     }
 }

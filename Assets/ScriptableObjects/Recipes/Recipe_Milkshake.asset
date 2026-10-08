@@ -21,3 +21,5 @@ MonoBehaviour:
   preferredPayout: 14
   acceptedPayout: 7
   iconName: Milkshake
+  preferredPrice: 14
+  acceptedPrice: 7

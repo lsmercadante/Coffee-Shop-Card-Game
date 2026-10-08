@@ -21,3 +21,5 @@ MonoBehaviour:
   preferredPayout: 10
   acceptedPayout: 5
   iconName: HotChocolate
+  preferredPrice: 10
+  acceptedPrice: 5

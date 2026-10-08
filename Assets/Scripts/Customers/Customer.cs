@@ -23,9 +23,12 @@ public class Customer : MonoBehaviour
              "in one turn don't move as a formation.")]
     [SerializeField] private float walkStagger = 0.15f;
 
+    [SerializeField] private Color happyTint = new Color(0.7f,1f,0.7f);
+
     private Coroutine walk;
     public CustomerData Data { get; private set; }
     public int PatienceRemaining { get; private set; }
+    private bool isHappy;
 
 
     public void Initialize(CustomerData data)
@@ -57,7 +60,8 @@ public class Customer : MonoBehaviour
 
         // Last turn: wash them red. The pips say HOW MANY turns; this says
         // HOW WORRIED, which is the signal you get while reading your hand.
-        body.color = PatienceRemaining == 1 ? impatientTint : normalTint;
+        if (!isHappy)
+            body.color = PatienceRemaining == 1 ? impatientTint : normalTint;
 
         return PatienceRemaining <= 0;              // keeping track of when the patience remaining hits zero
     }
@@ -135,6 +139,12 @@ public class Customer : MonoBehaviour
         if (Data.acceptedDrink != null && drink == Data.acceptedDrink.resultDrink)
             return ServeResponse.Accepted ;
         else return ServeResponse.Refused ; 
+    }
+
+    public void ShowHappy()
+    {
+        isHappy = true;
+        body.color = happyTint;
     }
 }
 

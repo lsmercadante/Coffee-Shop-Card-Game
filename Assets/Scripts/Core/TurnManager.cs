@@ -30,6 +30,7 @@ public class TurnManager : MonoBehaviour
     /// Fired whenever Energy changes. EnergyDisplay listens; card affordability
     /// dimming can too.
     public event System.Action EnergyChanged;
+    public event System.Action CoinsChanged;
 
     private void Awake() => Instance = this;
 
@@ -46,7 +47,7 @@ public class TurnManager : MonoBehaviour
     {
         // Patience ticks last thing in the turn, so a customer who arrived
         // this turn has had the whole of it before losing anything.
-        Coins -= line.TickAll();
+        Earn(-line.TickAll());
 
         // The entire hand goes, played or not (2-9). Before the next draw,
         // or DealTo finds a full hand and deals nothing.
@@ -103,5 +104,11 @@ public class TurnManager : MonoBehaviour
         deck.DealTo(hand);          // refills to the LIMIT, not by one
 
         return true;
+    }
+
+    public void Earn(int coins)
+    {
+        Coins += coins;
+        CoinsChanged?.Invoke();
     }
 }

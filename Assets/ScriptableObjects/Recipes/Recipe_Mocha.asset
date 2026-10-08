@@ -22,3 +22,5 @@ MonoBehaviour:
   preferredPayout: 25
   acceptedPayout: 12
   iconName: Mocha
+  preferredPrice: 25
+  acceptedPrice: 12

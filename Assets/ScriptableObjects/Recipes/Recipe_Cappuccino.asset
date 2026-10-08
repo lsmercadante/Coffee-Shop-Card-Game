@@ -22,3 +22,5 @@ MonoBehaviour:
   preferredPayout: 34
   acceptedPayout: 17
   iconName: Cappuccino
+  preferredPrice: 34
+  acceptedPrice: 17

@@ -26,6 +26,11 @@ public class PlayController : MonoBehaviour
     private CupSlot selectedCup;                    // the cup whose drink is selected
     public CupSlot SelectedCup => selectedCup;      // read-only from outside
 
+    [SerializeField] private CustomerLine line;
+    [SerializeField] private ChalkboardReachability board;
+    [SerializeField] private int serveCost = 1;
+
+
 
     private void Awake()
     {
@@ -113,6 +118,43 @@ public class PlayController : MonoBehaviour
         return true;
     }
 
+    public bool TryServe(CupSlot cup, CustomerSlot slot)
+{
+	if (cup == null || slot == null)
+		return false;
+	if (slot.IsEmpty || !slot.IsActive)
+		return false;
+	if (cup.ServableDrink == null) 
+		return false;
+	
+    ServeResponse response = slot.Occupant.Evaluate(cup.ServableDrink);
+
+    if (response == ServeResponse.Refused)
+		return false;
+	if (!turns.TrySpend(serveCost)) return false; 
+	//else return true;
+    //   6. Earn the price for that recipe at that response
+	turns.Earn(PriceFor(cup.Matched, response));
+    //   7. clear the cup, Serve the slot, Refresh the board
+    //      - clearing is what destroys the drink card: the cup no longer
+    //        matches, so RebuildVisuals draws bands (none) instead
+	cup.Clear();
+    line.Serve(slot);
+    board.Refresh();
+
+    //   8. RefreshHighlights
+    //
+    RefreshHighlights();
+    // Steps 4 and 5 must not swap. A refused serve costs nothing (3-8), and
+    // spending first would charge for a rejection.
+          //
+    // Step 7's board refresh matters because an emptied cup re-opens every
+    // recipe that cup was blocking.
+    return true;
+}
+
+
+
     /// Light every target that would accept the card in play. The set is tiny
     /// (3 cups + up to 6 customers), so brute force is fine - and this is most
     /// of what makes the interaction feel responsive.
@@ -141,5 +183,12 @@ public class PlayController : MonoBehaviour
         selected = null;
         selectedCup = cup;
         RefreshHighlights();
+    }
+
+    private static int PriceFor(RecipeData recipe, ServeResponse response)
+    {
+        if (response == ServeResponse.Preferred) return recipe.preferredPrice;
+        if (response == ServeResponse.Accepted) return recipe.acceptedPrice;
+        return 0;
     }
 }
