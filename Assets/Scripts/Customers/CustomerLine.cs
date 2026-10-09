@@ -19,6 +19,9 @@ public class CustomerLine : MonoBehaviour
 
     [SerializeField] private float happyLingerSeconds = 0.6f;
 
+    [SerializeField] private FloatingAmount floatingAmountPrefab;
+    [SerializeField] private float amountHeight = 1.6f;
+
     /// Turn 1: seed the shop partly full so there is something to do
     /// immediately and still room for the queue to build.
     public void OpenShift(int turn)
@@ -86,7 +89,11 @@ public class CustomerLine : MonoBehaviour
             if (slot.IsEmpty) continue;
             if (!slot.Occupant.Tick()) continue;
 
-            penalty += slot.Occupant.Data.walkoutPenalty;
+            int amount = slot.Occupant.Data.walkoutPenalty;
+            penalty += amount;
+            if (floatingAmountPrefab != null)
+                {FloatingAmount popup = Instantiate(floatingAmountPrefab, slot.transform.position + Vector3.up*amountHeight, Quaternion.identity);
+                popup.Show(-amount);}
             slot.Vacate(departureLinger);
         }
 

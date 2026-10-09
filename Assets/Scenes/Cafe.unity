@@ -3533,6 +3533,8 @@ MonoBehaviour:
   startingOccupied: 3
   departureLinger: 0.4
   happyLingerSeconds: 0.6
+  floatingAmountPrefab: {fileID: 530142371274131684, guid: 84c1de444a73e428687475f0dc4802b8, type: 3}
+  amountHeight: 1.6
 --- !u!4 &1192680849
 Transform:
   m_ObjectHideFlags: 0
@@ -3712,6 +3714,8 @@ MonoBehaviour:
   line: {fileID: 1192680848}
   board: {fileID: 86196041}
   serveCost: 1
+  floatingAmountPrefab: {fileID: 530142371274131684, guid: 84c1de444a73e428687475f0dc4802b8, type: 3}
+  amountHeight: 0
 --- !u!4 &1227776629
 Transform:
   m_ObjectHideFlags: 0

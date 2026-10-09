@@ -21,7 +21,9 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     // but a missing panel should not be a null reference if one does.
     public void OnPointerEnter(PointerEventData e)
     {
-        Debug.Log($"hover enter {name}");
+        //Debug.Log($"hover enter {name}");
+        var pc = PlayController.Instance;
+        if (pc != null && (pc.Selected != null || pc.SelectedCup != null)) return;
         if (TooltipPanel.Instance == null) return;
         // No offset: TooltipPanel places itself clear of this point using its
         // own measured size, which a fixed offset here could not do - the

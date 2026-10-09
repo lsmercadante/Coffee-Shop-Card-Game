@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 /// The single code path every card play goes through, whether the player
@@ -30,7 +31,8 @@ public class PlayController : MonoBehaviour
     [SerializeField] private ChalkboardReachability board;
     [SerializeField] private int serveCost = 1;
 
-
+    [SerializeField] private FloatingAmount floatingAmountPrefab;
+    [SerializeField] private float amountHeight = 1.6f;
 
     private void Awake()
     {
@@ -57,6 +59,7 @@ public class PlayController : MonoBehaviour
 
     public void SelectCard(CardVisual card)
     {
+        TooltipPanel.Instance.Hide();
         // Clicking the selected card again deselects it.
         if (selected == card) { ClearSelection(); return; }
 
@@ -74,6 +77,7 @@ public class PlayController : MonoBehaviour
 
     public void SelectCup(CupSlot cup)
     {
+        TooltipPanel.Instance.Hide();
         if (selectedCup == cup)
         { ClearSelection(); return; }
         if (selected != null) selected.SetSelected(false);
@@ -119,39 +123,35 @@ public class PlayController : MonoBehaviour
     }
 
     public bool TryServe(CupSlot cup, CustomerSlot slot)
-{
-	if (cup == null || slot == null)
-		return false;
-	if (slot.IsEmpty || !slot.IsActive)
-		return false;
-	if (cup.ServableDrink == null) 
-		return false;
-	
-    ServeResponse response = slot.Occupant.Evaluate(cup.ServableDrink);
+    {
+        if (cup == null || slot == null)
+            return false;
+        if (slot.IsEmpty || !slot.IsActive)
+            return false;
+        if (cup.ServableDrink == null)
+            return false;
 
-    if (response == ServeResponse.Refused)
-		return false;
-	if (!turns.TrySpend(serveCost)) return false; 
-	//else return true;
-    //   6. Earn the price for that recipe at that response
-	turns.Earn(PriceFor(cup.Matched, response));
-    //   7. clear the cup, Serve the slot, Refresh the board
-    //      - clearing is what destroys the drink card: the cup no longer
-    //        matches, so RebuildVisuals draws bands (none) instead
-	cup.Clear();
-    line.Serve(slot);
-    board.Refresh();
+        ServeResponse response = slot.Occupant.Evaluate(cup.ServableDrink);
 
-    //   8. RefreshHighlights
-    //
-    RefreshHighlights();
-    // Steps 4 and 5 must not swap. A refused serve costs nothing (3-8), and
-    // spending first would charge for a rejection.
-          //
-    // Step 7's board refresh matters because an emptied cup re-opens every
-    // recipe that cup was blocking.
-    return true;
-}
+        if (response == ServeResponse.Refused)
+            return false;
+        if (!turns.TrySpend(serveCost)) return false;
+
+        int price = PriceFor(cup.Matched, response);
+        turns.Earn(price);
+
+        FloatingAmount popup = Instantiate(floatingAmountPrefab, slot.transform.position + Vector3.up * amountHeight, Quaternion.identity);
+        popup.Show(price);
+
+        cup.Clear();
+        line.Serve(slot);
+        board.Refresh();
+
+
+        RefreshHighlights();
+
+        return true;
+    }
 
 
 
@@ -172,6 +172,7 @@ public class PlayController : MonoBehaviour
     /// Called by CardDragHandler on pickup so targets light during a drag too.
     public void BeginDragHighlight(CardVisual card)
     {
+        TooltipPanel.Instance.Hide();
         selected = card;
         RefreshHighlights();
     }
@@ -180,6 +181,7 @@ public class PlayController : MonoBehaviour
     /// click landing mid-drag dispatches to TryServe rather than TryPlay.
     public void BeginCupDragHighlight(CupSlot cup)
     {
+        TooltipPanel.Instance.Hide();
         selected = null;
         selectedCup = cup;
         RefreshHighlights();
